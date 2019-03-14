@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Mapbox - Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/x-icon" href="img/logo_ashara.png" />
+  <script src="js/bogota.js" type="text/javascript"></script>
+	<script src="js/colombia.js" type="text/javascript"></script>
+	<script src="js/planeta.js" type="text/javascript"></script>
+	<LINK REL=StyleSheet HREF="css/style.css" TYPE="text/css" MEDIA=screen>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+</head>
+<body onload="chargeBogota()">
+	<header class="row">
+		<div class="col-4">
+			<h2>Estilos basicos de Mapbox</h2>
+		</div>
+		<div class="col-8">
+			<nav class="menu">
+							<li>
+									<a class="link" onclick="chargeBogota()">Bogota</a>
+							</li>
+							<li>
+									<a class="link" onclick="chargeColombia()">Colombia</a>
+							</li>
+							<li>
+									<a class="link" onclick="chargePlaneta()">Planeta</a>
+							</li>
+			</nav>
+		</div>
+
+
+	</header>
+
+
+<div class="row">
+	<div class="col-4">
+		<h1>Mapbox streets</h1>
+		<div class='map' id="map1"></div>
+	</div>
+	<div class="col-4">
+		<h1>Mapbox outdoors</h1>
+		<div class='map' id="map2"></div>
+	</div>
+	<div class="col-4">
+		<h1>Mapbox light</h1>
+		<div class='map' id="map3"></div>
+	</div>
+	<div class="col-6">
+		<h1>Mapbox dark</h1>
+		<div class='map' id="map4"></div>
+	</div>
+	<div class="col-6">
+		<h1>Mapbox satellite</h1>
+		<div class='map' id="map5"></div>
+	</div>
+</div>
+
+<footer>
+</footer>
+</body>
+<script type="text/javascript">
+	var geojson;
+	var info;
+	var sector= colombia;
+	var zoom= 5;
+	var center= [4, -73.5];
+	var map1=null;
+	var map2=null;
+	var map3=null;
+	var map4=null;
+	var map5=null;
+	//8 bogota [4.47, -74.2]
+	// 5 colombia [4, -73.5]
+	//1 numdo [0, 0]
+
+	function chargeBogota(){
+		sector= bogota;
+		zoom= 8;
+		center= [4.47, -74.2];
+		myFunction();
+	}
+	function chargeColombia(){
+		sector= colombia;
+		zoom= 5;
+		center= [4, -73.5];
+		myFunction();
+	}
+	function chargePlaneta(){
+		sector= mundo;
+		zoom= 1;
+		center= [0, 0];
+		myFunction();
+	}
+
+
+
+	function myFunction(){
+		doMapStreet();
+		doMapOutdoors();
+		doMapLight();
+		doMapDark();
+		doMapSatellite();
+	}
+
+	//Funcion que crea el mapa con "mapbox.streets"
+	function doMapStreet(){
+		if( map1!=null )
+			map1.remove()
+		map1 = L.map('map1').setView(center, zoom);
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiZ3J1bWFzaCIsImEiOiJjanQ5M2NoZ3UwMDZxNDlvOG12OGt0NzRuIn0.xcgyCW4dfXR65Dfc53w6Dw', {
+			minZoom: zoom,
+			maxZoom: 10,
+			attribution: 'Map data &copy;' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox.streets'}).addTo(map1);
+		info = L.control();
+		geojson = L.geoJson(sector, {
+			style: {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: '#FFEDA0'
+			}
+		}).addTo(map1);
+	}
+	//Funcion que crea el mapa con "mapbox.outdoors"
+	function doMapOutdoors(){
+		if( map2!=null )
+			map2.remove()
+		map2 = L.map('map2').setView(center, zoom);
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiZ3J1bWFzaCIsImEiOiJjanQ5M2NoZ3UwMDZxNDlvOG12OGt0NzRuIn0.xcgyCW4dfXR65Dfc53w6Dw', {
+			minZoom: zoom,
+			maxZoom: 10,
+			attribution: 'Map data &copy;' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox.outdoors'}).addTo(map2);
+		info = L.control();
+		geojson = L.geoJson(sector, {
+			style: {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: '#FFEDA0'
+			}
+		}).addTo(map2);
+	}
+	//Funcion que crea el mapa con "mapbox.light"
+	function doMapLight(){
+		if( map3!=null )
+			map3.remove()
+		map3 = L.map('map3').setView(center, zoom);
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiZ3J1bWFzaCIsImEiOiJjanQ5M2NoZ3UwMDZxNDlvOG12OGt0NzRuIn0.xcgyCW4dfXR65Dfc53w6Dw', {
+			minZoom: zoom,
+			maxZoom: 10,
+			attribution: 'Map data &copy;' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox.light'}).addTo(map3);
+		info = L.control();
+		geojson = L.geoJson(sector, {
+			style: {
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7,
+				fillColor: '#FFEDA0'
+			}
+		}).addTo(map3);
+	}
+	//Funcion que crea el mapa con "mapbox.dark"
+	function doMapDark(){
+		if( map4!=null )
+			map4.remove()
+			map4 = L.map('map4').setView(center, zoom);
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiZ3J1bWFzaCIsImEiOiJjanQ5M2NoZ3UwMDZxNDlvOG12OGt0NzRuIn0.xcgyCW4dfXR65Dfc53w6Dw', {
+				minZoom: zoom,
+				maxZoom: 10,
+				attribution: 'Map data &copy;' +
+					'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+					'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+				id: 'mapbox.dark'}).addTo(map4);
+			info = L.control();
+			geojson = L.geoJson(sector, {
+				style: {
+					weight: 2,
+					opacity: 1,
+					color: 'white',
+					dashArray: '3',
+					fillOpacity: 0.7,
+					fillColor: '#FFEDA0'
+				}
+			}).addTo(map4);
+		}
+	//Funcion que crea el mapa con "mapbox.satellite"
+	function doMapSatellite(){
+		if( map5!=null )
+			map5.remove()
+				map5 = L.map('map5').setView(center, zoom);
+				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiZ3J1bWFzaCIsImEiOiJjanQ5M2NoZ3UwMDZxNDlvOG12OGt0NzRuIn0.xcgyCW4dfXR65Dfc53w6Dw', {
+					minZoom: zoom,
+					maxZoom: 10,
+					attribution: 'Map data &copy;' +
+						'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+						'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+					id: 'mapbox.satellite'}).addTo(map5);
+				info = L.control();
+				geojson = L.geoJson(sector, {
+					style: {
+						weight: 2,
+						opacity: 1,
+						color: 'white',
+						dashArray: '3',
+						fillOpacity: 0.7,
+						fillColor: '#FFEDA0'
+					}
+				}).addTo(map5);
+	}
+
+
+</script>
+</html>
