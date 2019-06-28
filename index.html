@@ -15,52 +15,64 @@
 	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
 </head>
 <body onload="chargeBogota()">
-	<header class="row">
-		<div class="col-4">
-			<h2>Estilos basicos de Mapbox</h2>
-		</div>
-		<div class="col-8">
-			<nav class="menu">
-							<li>
-									<a class="link" onclick="chargeBogota()">Bogota</a>
-							</li>
-							<li>
-									<a class="link" onclick="chargeColombia()">Colombia</a>
-							</li>
-							<li>
-									<a class="link" onclick="chargePlaneta()">Planeta</a>
-							</li>
+	<header>
+		<h2>Estilos basicos de Mapbox</h2>
+		<nav class="menu">
+			<li>
+				<a class="link" onclick="chargeBogota()">Bogota</a>
+				</li>
+				<li>
+					<a class="link" onclick="chargeColombia()">Colombia</a>
+				</li>
+				<li>
+					<a class="link" onclick="chargePlaneta()">Tierra</a>
+				</li>
 			</nav>
-		</div>
-
-
 	</header>
-
-
-<div class="row">
-	<div class="col-4">
-		<h1>Mapbox streets</h1>
+<H1 id="title"></H1>
+<div class="map-list">
+	
+	<div class="map-card">
 		<div class='map' id="map1"></div>
+		<h1 class="map-title">Mapbox streets</h1>
 	</div>
-	<div class="col-4">
-		<h1>Mapbox outdoors</h1>
+	<div class="map-card">
 		<div class='map' id="map2"></div>
+		<h1 class="map-title">Mapbox outdoors</h1>
 	</div>
-	<div class="col-4">
-		<h1>Mapbox light</h1>
+	<div class="map-card">
 		<div class='map' id="map3"></div>
+		<h1 class="map-title">Mapbox light</h1>
 	</div>
-	<div class="col-6">
-		<h1>Mapbox dark</h1>
+	<div class="map-card">
 		<div class='map' id="map4"></div>
+		<h1 class="map-title">Mapbox dark</h1>
 	</div>
-	<div class="col-6">
-		<h1>Mapbox satellite</h1>
+	<div class="map-card">
 		<div class='map' id="map5"></div>
+		<h1 class="map-title">Mapbox satellite</h1>
 	</div>
 </div>
 
 <footer>
+	<div>
+		<h3>Andrea Liliana Ramírez Silva (Grumash)</h3>
+		<h4>FrontEnd developer y CM - Ashara Studios. Y FullStack developer - Universidad Distrital. </h4>
+	</div>
+		<nav class="menu">
+						<li>
+							<a class="link"  href="https://www.linkedin.com/in/anlramirezs/" target="_blank">​LinkedIn</a>
+						</li>
+						<li>
+							<a class="link"  href="https://github.com/anlramirezs11" target="_blank">Github</a>
+						</li>
+						<li>
+							<a class="link" href="https://www.facebook.com/anlramirezs" target="_blank">Facebook</a>
+						</li>
+						<li>
+								<a class="link"  href="https://twitter.com/anlramirezs" target="_blank">Twitter</a>
+						</li>
+					</nav>
 </footer>
 </body>
 <script type="text/javascript">
@@ -74,26 +86,27 @@
 	var map3=null;
 	var map4=null;
 	var map5=null;
-	//8 bogota [4.47, -74.2]
-	// 5 colombia [4, -73.5]
-	//1 numdo [0, 0]
 
 	function chargeBogota(){
 		sector= bogota;
 		zoom= 8;
 		center= [4.47, -74.2];
+		document.getElementById('title').innerHTML= "Bogotá"
 		myFunction();
+
 	}
 	function chargeColombia(){
 		sector= colombia;
 		zoom= 5;
 		center= [4, -73.5];
+		document.getElementById('title').innerHTML= "Colombia"
 		myFunction();
 	}
 	function chargePlaneta(){
 		sector= mundo;
 		zoom= 1;
 		center= [0, 0];
+		document.getElementById('title').innerHTML= "Tierra"
 		myFunction();
 	}
 
@@ -118,7 +131,7 @@
 			attribution: 'Map data &copy;' +
 				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			id: 'mapbox.streets'}).addTo(map1);
+				id: 'mapbox.streets'}).addTo(map1);
 		info = L.control();
 		geojson = L.geoJson(sector, {
 			style: {
